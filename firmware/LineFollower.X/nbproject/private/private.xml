@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/microchip/harmony/v2_05_01/apps/LineFollower/firmware/src/data_thread.h</file>
+            <file>file:/C:/microchip/harmony/v2_05_01/apps/LineFollower/firmware/src/uart_thread.h</file>
+            <file>file:/C:/microchip/harmony/v2_05_01/apps/LineFollower/firmware/src/uart_thread.c</file>
+            <file>file:/C:/microchip/harmony/v2_05_01/apps/LineFollower/firmware/src/line_thread.h</file>
+            <file>file:/C:/microchip/harmony/v2_05_01/apps/LineFollower/firmware/src/motor_thread.c</file>
+            <file>file:/C:/microchip/harmony/v2_05_01/apps/LineFollower/firmware/src/encoder_thread.h</file>
+            <file>file:/C:/microchip/harmony/v2_05_01/apps/LineFollower/firmware/src/motor_thread.h</file>
+            <file>file:/C:/microchip/harmony/v2_05_01/apps/LineFollower/firmware/src/encoder_thread.c</file>
+            <file>file:/C:/microchip/harmony/v2_05_01/apps/LineFollower/firmware/src/line_thread.c</file>
+            <file>file:/C:/microchip/harmony/v2_05_01/apps/LineFollower/firmware/src/data_thread.c</file>
+        </group>
+    </open-files>
+</project-private>
