@@ -4,19 +4,19 @@
 
  
     void setDirection(bool dir){
-        motor.leftDir = dir;
         motor.rightDir = dir;
+        motor.left = dir;
         PLIB_PORTS_PinWrite (PORTS_ID_0, PORT_CHANNEL_C, PORTS_BIT_POS_14, !dir);
         PLIB_PORTS_PinWrite (PORTS_ID_0, PORT_CHANNEL_G, PORTS_BIT_POS_1, !dir);
         return;
     }
-    void setDirectionL(bool dir){
-        motor.leftDir = dir;
+    void setDirectionR(bool dir){
+        motor.rightDir = dir;
         PLIB_PORTS_PinWrite (PORTS_ID_0, PORT_CHANNEL_C, PORTS_BIT_POS_14, !dir);
         return;
     }
-    void setDirectionR(bool dir){
-        motor.rightDir = dir;
+    void setDirectionL(bool dir){
+        motor.left = dir;
         PLIB_PORTS_PinWrite (PORTS_ID_0, PORT_CHANNEL_G, PORTS_BIT_POS_1, !dir);
         return;
     }
@@ -24,45 +24,45 @@
     void setPulseWidth(int val){
             DRV_OC0_Stop();    
             DRV_OC1_Stop();
-            motor.rightPower = val;
             motor.leftPower = val;
+            motor.rightPower = val;
             PLIB_OC_PulseWidth16BitSet(OC_ID_1, val);
             PLIB_OC_PulseWidth16BitSet(OC_ID_2, val);
             DRV_OC0_Start();
             DRV_OC1_Start();
     }
 
-    void setPulseWidthL(int val){
+    void setPulseWidthR(int val){
         DRV_OC0_Stop();
-        motor.leftPower = val;
+        motor.rightPower = val;
         PLIB_OC_PulseWidth16BitSet(OC_ID_1, val);
         DRV_OC0_Start();
         return;
     }
-    void setPulseWidthR(int val){
+    void setPulseWidthL(int val){
         DRV_OC1_Stop();
-        motor.rightPower = val;
+        motor.leftPower = val;
         PLIB_OC_PulseWidth16BitSet(OC_ID_2, val);
         DRV_OC1_Start();
         return;
     }
     
-    void setMotorL(bool dir, int val){
+    void setMotorR(bool dir, int val){
         DRV_OC0_Stop();
         if (val > 100) val = 100;
-        motor.leftPower = val*DRV_TMR0_PeriodValueGet()/100;
-        motor.leftDir = dir;
+        motor.rightPower = val*DRV_TMR0_PeriodValueGet()/100;
+        motor.rightDir = dir;
         PLIB_OC_PulseWidth16BitSet(OC_ID_1, (uint16_t)val*DRV_TMR0_PeriodValueGet()/100);
         PLIB_PORTS_PinWrite (PORTS_ID_0, PORT_CHANNEL_C, PORTS_BIT_POS_14, !dir);
         DRV_OC0_Start();
         return;
     }
     
-    void setMotorR(bool dir, int val){
+    void setMotorL(bool dir, int val){
         DRV_OC1_Stop();
         if (val > 100) val = 100;
-        motor.rightPower = val*DRV_TMR0_PeriodValueGet()/100;
-        motor.rightDir = dir;
+        motor.leftPower = val*DRV_TMR0_PeriodValueGet()/100;
+        motor.left = dir;
         PLIB_OC_PulseWidth16BitSet(OC_ID_2, (uint16_t)val*DRV_TMR0_PeriodValueGet()/100);
         PLIB_PORTS_PinWrite (PORTS_ID_0, PORT_CHANNEL_G, PORTS_BIT_POS_1, !dir);
         DRV_OC1_Start();
@@ -72,10 +72,10 @@
         PLIB_PORTS_DirectionOutputSet( PORTS_ID_0, PORT_CHANNEL_C,  0x4000);
         PLIB_PORTS_DirectionOutputSet( PORTS_ID_0, PORT_CHANNEL_G,  0x0001);
         DRV_TMR0_Start();
-        motor.leftSpeed = 0;
         motor.rightSpeed = 0;
-        motor.leftDir = FORWARD;
+        motor.leftSpeed = 0;
         motor.rightDir = FORWARD;
+        motor.leftDir = FORWARD;
         setMotorR(FORWARD, 0);
         setMotorL(FORWARD, 0);
     }
@@ -84,8 +84,8 @@
         Motor_Initialize();
         int state = 0;//idle
         char linedata = 'c';
-        int right = 0;
         int left = 0;
+        int right = 0;
         char lastLine ='c';
         char receive;
 
@@ -104,15 +104,15 @@
                      lastLine = 'c';
                 }
                 else if (linedata == 'r'){
-                    //transmitUARTstring("{\"line\":\"right\"}");
-                    setMotorR(FORWARD,50);
-                    setMotorL(REVERSE, 50);
+                    //transmitUARTstring("{\"line\":\"left\"}");
+                    setMotorL(FORWARD,50);
+                    setMotorR(REVERSE, 50);
                     lastLine = 'r';
                 }
                 else if(linedata =='l'){
-                     //transmitUARTstring("{\"line\":\"left\"}");
-                     setMotorL(FORWARD,50);
-                     setMotorR(REVERSE, 50);
+                     //transmitUARTstring("{\"line\":\"right\"}");
+                     setMotorR(FORWARD,50);
+                     setMotorL(REVERSE, 50);
                      lastLine = 'l';
                 }
               lastLine = linedata;
@@ -121,12 +121,12 @@
             else{
 
                 if(lastLine == 'r'){
-                    //transmitUARTstring("{\"line\":\"lost right\"}");
-                    setMotorL(FORWARD,50);
-                    setMotorR(REVERSE, 50);
+                    //transmitUARTstring("{\"line\":\"lost left\"}");
+                    setMotorR(FORWARD,50);
+                    setMotorL(REVERSE, 50);
                 }
                 else if(lastLine == 'l'){
-                    //transmitUARTstring("{\"line\":\"lost left\"}");
+                    //transmitUARTstring("{\"line\":\"lost right\"}");
                      setMotorR(FORWARD,50);
                      setMotorL(REVERSE, 50);
                 }
