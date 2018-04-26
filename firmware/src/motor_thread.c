@@ -5,7 +5,7 @@
  
     void setDirection(bool dir){
         motor.rightDir = dir;
-        motor.left = dir;
+        motor.leftDir = dir;
         PLIB_PORTS_PinWrite (PORTS_ID_0, PORT_CHANNEL_C, PORTS_BIT_POS_14, !dir);
         PLIB_PORTS_PinWrite (PORTS_ID_0, PORT_CHANNEL_G, PORTS_BIT_POS_1, !dir);
         return;
@@ -16,7 +16,7 @@
         return;
     }
     void setDirectionL(bool dir){
-        motor.left = dir;
+        motor.leftDir = dir;
         PLIB_PORTS_PinWrite (PORTS_ID_0, PORT_CHANNEL_G, PORTS_BIT_POS_1, !dir);
         return;
     }
@@ -62,7 +62,7 @@
         DRV_OC1_Stop();
         if (val > 100) val = 100;
         motor.leftPower = val*DRV_TMR0_PeriodValueGet()/100;
-        motor.left = dir;
+        motor.leftDir = dir;
         PLIB_OC_PulseWidth16BitSet(OC_ID_2, (uint16_t)val*DRV_TMR0_PeriodValueGet()/100);
         PLIB_PORTS_PinWrite (PORTS_ID_0, PORT_CHANNEL_G, PORTS_BIT_POS_1, !dir);
         DRV_OC1_Start();
